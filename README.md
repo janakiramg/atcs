@@ -1,4 +1,4 @@
-# atcs
+# atcs-api
 
 Air-traffic control system
 
