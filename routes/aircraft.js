@@ -33,7 +33,7 @@ router.post('/', async function(req, res) {
 /**
  * To dequeue a aircraft
  */
-router.delete('/', async function(req, res) {
+router.post('/dequeue', async function(req, res) {
   try {
     const response = await aircraftService.dequeue();
     res.send(response);
