@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const routes = require('./routes');
 const port = 3000;
 const app = express();
+const { logger } = require('./config/winston');
 
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
@@ -13,4 +14,4 @@ app.use(function(req, res, next) {
 });
 app.get('/', (req, res) => res.send('Welcome to air-traffic control system!!!'));
 app.use('/', routes);
-app.listen(port, () => console.log(`ATCS app listening on port ${port}!`));
+app.listen(port, () => logger.info(`ATCS app listening on port ${port}!`));

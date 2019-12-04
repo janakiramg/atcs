@@ -1,6 +1,8 @@
+const { logger } = require('../config/winston');
+
 function handleError(error, req, res, httpVerb) {
-  console.log(`Failed to ${httpVerb} ${req.baseUrl.replace('/api/', '')}`);
-  console.log(error);
+  logger.error(`Failed to ${httpVerb} ${req.baseUrl.replace('/api/', '')}`);
+  logger.error(error);
   res.status(500).send({ message: error.message });
 }
 

@@ -30,13 +30,12 @@ router.post('/', async function(req, res) {
   }
 });
 
+/**
+ * To dequeue a aircraft
+ */
 router.delete('/', async function(req, res) {
   try {
-    //Precedence - Emergency,VIP, Passenger, Cargo
-    // Precedence - Large, Small
-    // Precendence - old, new
     const response = await aircraftService.dequeue();
-    console.log('response ', response);
     res.send(response);
   } catch (error) {
     handleErrorService.handleError(error, req, res, 'dequeue');
