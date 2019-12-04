@@ -7,6 +7,7 @@ Air-traffic control system
 - install nodejs version 10.x. To download and install please go through node <a href="https://nodejs.org/en/">official website</a>
 - make sure `npm` command working
 - install any REST client. Example: https://www.getpostman.com/
+- install postgresql database and have database connection details ready
 
 # configuration
 
