@@ -5,7 +5,7 @@ const { logger } = require('../config/winston');
  * To find all aircrafts
  */
 async function findAll() {
-  const aircrafts = await Aircraft.findAll({ raw: true });
+  const aircrafts = await Aircraft.findAll({ order: [['id', 'ASC']], raw: true });
   logger.info(`Found ${aircrafts.length} aircrafts.`);
   return aircrafts;
 }
@@ -28,6 +28,7 @@ async function dequeue() {
   // 1. Large AC’s of a given type have removal precedence over Small AC’s of the same type.
   // 2. Earlier enqueued AC’s of a given type and size have precedence over later enqueued AC’s of the same type and size.
   const aircrafts = await Aircraft.findAll({
+    where: { status: 'Enqueue' },
     order: [
       ['size', 'DESC'],
       ['createdAt', 'ASC']
@@ -66,15 +67,14 @@ function filterAircrafts(aircrafts, type) {
 }
 
 /**
- * Update aircraft status and destroy it
+ * Update aircraft status to dequeue
  * @param {*} id
  */
 async function updateAndDestroy(id) {
   if (id) {
     await Aircraft.update({ status: 'Dequeue' }, { where: { id } });
-    await Aircraft.destroy({ where: { id } });
-    logger.info(`Aircraft with ${id} deleted successfully.`);
-    return 'Aircraft deleted successfully';
+    logger.info(`Aircraft with ${id} status changed successfully.`);
+    return 'Aircraft dequeue successfully';
   } else {
     logger.info('No aircraft found.');
     return 'No aircraft found';
